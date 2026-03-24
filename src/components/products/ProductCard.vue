@@ -1,6 +1,7 @@
 <script>
 import BaseButton from '@/components/ui/BaseButton.vue'
 import BaseCard from '@/components/ui/BaseCard.vue'
+import { mapMutations } from 'vuex'
 
 export default {
   props: ['id', 'title', 'category', 'price', 'imageSrc'],
@@ -12,6 +13,9 @@ export default {
     goToDetails() {
       this.$router.push('/products/' + this.id)
     },
+    ...mapMutations({
+      addToCart: 'ADD_TO_CART',
+    }),
   },
 }
 </script>
@@ -26,7 +30,17 @@ export default {
         <p>{{ category }}</p>
         <h4>{{ price }}</h4>
         <div>
-          <base-button>Add to cart</base-button>
+          <base-button
+            @click="
+              addToCart({
+                id: this.id,
+                title: this.title,
+                price: this.price,
+                imageSrc: this.imageSrc,
+              })
+            "
+            >Add to cart</base-button
+          >
           <base-button mode="outline" @click="goToDetails">View Details</base-button>
         </div>
       </div>

@@ -1,39 +1,28 @@
 <script>
-import BaseLoader from '@/components/ui/BaseLoader.vue'
+import { mapGetters } from 'vuex'
 import ProductCard from '../../components/products/ProductCard.vue'
-import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  components: { ProductCard, BaseLoader },
+  components: { ProductCard },
   computed: {
     ...mapGetters({
-      products: 'GET_PRODUCTS',
-      isLoading: 'GET_IS_LOADING_PRODUCTS',
-      error: 'GET_PRODUCTS_FETCH_ERROR',
+      products: 'GET_CART_ITEMS',
     }),
-  },
-  methods: {
-    ...mapActions({ loadProducts: 'FETCH_PRODUCTS' }),
-  },
-  created() {
-    this.loadProducts()
   },
 }
 </script>
-
 <template>
   <div>
-    <h1>Products</h1>
-    <base-loader v-if="isLoading" class="loader"></base-loader>
+    <h1>Cart Details</h1>
+    <div v-if="!products || !products.length">No Products in Cart</div>
     <div v-else class="list-container">
       <product-card
-        style="margin: 0px"
         v-for="product in products"
         :id="product.id"
         :title="product.title"
         :category="product.category"
         :price="product.price"
-        :imageSrc="product.images[0]"
+        :imageSrc="product.imageSrc"
       ></product-card>
     </div>
   </div>
@@ -43,9 +32,7 @@ export default {
 h1 {
   padding-left: 55px;
 }
-.loader {
-  top: 200px;
-}
+
 .list-container {
   display: flex;
   justify-content: flex-start;

@@ -1,4 +1,13 @@
-<script></script>
+<script>
+import { mapGetters } from 'vuex'
+
+export default {
+  name: 'TheHeader',
+  computed: {
+    ...mapGetters({ cart: 'GET_CART_ITEMS' }),
+  },
+}
+</script>
 
 <template>
   <header>
@@ -11,7 +20,7 @@
           <router-link to="/products">All Products</router-link>
         </li>
         <li>
-          <router-link to="/cart">Cart</router-link>
+          <router-link to="/cart">Cart {{ cart.length }}</router-link>
         </li>
       </ul>
     </nav>
